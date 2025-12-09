@@ -12,6 +12,22 @@ export class SessionService {
 
   private isLoggedSubject = new BehaviorSubject<boolean>(this.isLogged);
 
+  constructor() {
+    if (window.Cypress && window.CypressLoggedIn) {
+      this.isLogged = true;
+      this.sessionInformation = {
+        token: 'FAKE',
+        type: 'Bearer',
+        id: 1,
+        username: 'cypress',
+        firstName: 'Test',
+        lastName: 'User',
+        admin: window.isAdmin ? window.isAdmin : false
+      };
+      this.isLoggedSubject.next(true);
+    }
+  }
+
   public $isLogged(): Observable<boolean> {
     return this.isLoggedSubject.asObservable();
   }
