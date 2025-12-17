@@ -57,36 +57,6 @@ Ce script permet de créer le schéma et les données nécessaires.
 
 ---
 
-## Installation et lancement du back-end
-
-1. Se placer dans le dossier back-end
-
-```bash
-cd back
-```
-
-2. Lancer les tests et démarrer l’application
-
-```bash
-mvn clean test
-```
-
-Cette commande :
-
-* compile le projet
-* exécute les tests
-* génère le rapport de couverture **JaCoCo**
-
-### Rapport de couverture back-end
-
-Le rapport JaCoCo est disponible ici :
-
-```text
-back/target/site/jacoco/index.html
-```
-
----
-
 ## Installation et lancement du front-end
 
 1. Se placer dans le dossier front-end
@@ -160,6 +130,36 @@ Le rapport est disponible ici :
 
 ```text
 front/coverage/lcov-report/index.html
+```
+
+---
+
+## Lancement des tests du back-end
+
+1. Se placer dans le dossier back-end
+
+```bash
+cd back
+```
+
+2. Lancer les tests
+
+```bash
+mvn clean test
+```
+
+Cette commande :
+
+* compile le projet
+* exécute les tests
+* génère le rapport de couverture **JaCoCo**
+
+### Rapport de couverture back-end
+
+Le rapport JaCoCo est disponible ici :
+
+```text
+back/target/site/jacoco/index.html
 ```
 
 ---
