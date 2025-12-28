@@ -27,8 +27,8 @@ Assurez-vous d’avoir installé :
 ## Récupération du projet
 
 ```bash
-git clone https://github.com/OpenClassrooms-Student-Center/P5-Full-Stack-testing.git
-cd P5-Full-Stack-testing
+git clone https://github.com/MathMust/OpenclassroomsProjectTesting.git
+cd OpenclassroomsProjectTesting
 ```
 
 ---
