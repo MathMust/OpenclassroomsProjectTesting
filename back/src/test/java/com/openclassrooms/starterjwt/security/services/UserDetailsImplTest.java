@@ -1,6 +1,5 @@
-package com.openclassrooms.starterjwt;
+package com.openclassrooms.starterjwt.security.services;
 
-import com.openclassrooms.starterjwt.security.services.UserDetailsImpl;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
