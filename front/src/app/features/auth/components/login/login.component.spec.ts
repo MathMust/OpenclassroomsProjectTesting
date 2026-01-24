@@ -56,31 +56,10 @@ describe('LoginComponent Integration', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should initialize the form with empty values', () => {
-    const formValue = component.form.value;
-    expect(formValue.email).toBe('');
-    expect(formValue.password).toBe('');
-    expect(component.form.valid).toBe(false);
-  });
-
   it('should toggle password visibility', () => {
     expect(component.hide).toBe(true);
     component.hide = !component.hide;
     expect(component.hide).toBe(false);
-  });
-
-  it('should mark form invalid when email or password is invalid', () => {
-    component.form.controls['email'].setValue('');
-    component.form.controls['password'].setValue('');
-    expect(component.form.invalid).toBe(true);
-
-    component.form.controls['email'].setValue('invalid-email');
-    component.form.controls['password'].setValue('12');
-    expect(component.form.invalid).toBe(true);
-
-    component.form.controls['email'].setValue('test@example.com');
-    component.form.controls['password'].setValue('123');
-    expect(component.form.valid).toBe(true);
   });
 
   it('should login successfully and navigate', () => {
@@ -111,6 +90,27 @@ describe('LoginComponent Integration', () => {
     req.flush({ message: 'Invalid login' }, { status: 401, statusText: 'Unauthorized' });
 
     expect(component.onError).toBe(true);
+  });
+
+  it('should initialize the form with empty values', () => {
+    const formValue = component.form.value;
+    expect(formValue.email).toBe('');
+    expect(formValue.password).toBe('');
+    expect(component.form.valid).toBe(false);
+  });
+
+  it('should mark form invalid when email or password is invalid', () => {
+    component.form.controls['email'].setValue('');
+    component.form.controls['password'].setValue('');
+    expect(component.form.invalid).toBe(true);
+
+    component.form.controls['email'].setValue('invalid-email');
+    component.form.controls['password'].setValue('12');
+    expect(component.form.invalid).toBe(true);
+
+    component.form.controls['email'].setValue('test@example.com');
+    component.form.controls['password'].setValue('123');
+    expect(component.form.valid).toBe(true);
   });
 
   it('should disable submit button when form is invalid', () => {

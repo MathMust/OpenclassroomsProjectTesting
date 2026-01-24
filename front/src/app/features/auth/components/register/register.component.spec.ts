@@ -17,7 +17,7 @@ describe('RegisterComponent Integration', () => {
   let httpMock: HttpTestingController;
   let authService: AuthService;
 
-  // 🔥 Mock Router pour éviter le warning NgZone
+  // Mock Router pour éviter le warning NgZone
   const routerMock = {
     navigate: jest.fn()
   };
@@ -52,6 +52,26 @@ describe('RegisterComponent Integration', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should register successfully and navigate to /login', () => {
+    jest.spyOn(routerMock, 'navigate');
+
+    component.form.patchValue({
+      email: 'test@example.com',
+      firstName: 'John',
+      lastName: 'Doe',
+      password: '12345'
+    });
+
+    component.submit();
+
+    const req = httpMock.expectOne('api/auth/register');
+    expect(req.request.method).toBe('POST');
+
+    req.flush(null);
+
+    expect(routerMock.navigate).toHaveBeenCalledWith(['/login']);
+  });
+
   it('should initialize form with empty values', () => {
     const v = component.form.value;
     expect(v.email).toBe('');
@@ -79,25 +99,12 @@ describe('RegisterComponent Integration', () => {
     expect(component.form.valid).toBe(true);
   });
 
-  it('should register successfully and navigate to /login', () => {
-    jest.spyOn(routerMock, 'navigate');
+  it('should disable submit button when form is invalid', () => {
+    component.form.reset();
+    fixture.detectChanges();
 
-    component.form.patchValue({
-      email: 'test@example.com',
-      firstName: 'John',
-      lastName: 'Doe',
-      password: '12345'
-    });
-
-    component.submit();
-
-    // 🔥 Vérification requête HTTP réelle
-    const req = httpMock.expectOne('api/auth/register');
-    expect(req.request.method).toBe('POST');
-
-    req.flush(null);
-
-    expect(routerMock.navigate).toHaveBeenCalledWith(['/login']);
+    const button = fixture.nativeElement.querySelector('button[type="submit"]');
+    expect(button.disabled).toBe(true);
   });
 
   it('should set onError on registration failure', () => {
@@ -118,14 +125,6 @@ describe('RegisterComponent Integration', () => {
     );
 
     expect(component.onError).toBe(true);
-  });
-
-  it('should disable submit button when form is invalid', () => {
-    component.form.reset();
-    fixture.detectChanges();
-
-    const button = fixture.nativeElement.querySelector('button[type="submit"]');
-    expect(button.disabled).toBe(true);
   });
 
   it('should display error message when onError is true', () => {

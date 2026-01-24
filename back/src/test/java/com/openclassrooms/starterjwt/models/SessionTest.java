@@ -52,9 +52,41 @@ class SessionTest {
 
     @Test
     void equals_shouldBeBasedOnIdOnly() {
-        Session s1 = Session.builder().id(1L).name("A").build();
-        Session s2 = Session.builder().id(1L).name("B").build();
-        Session s3 = Session.builder().id(2L).name("A").build();
+        Date date = new Date();
+        LocalDateTime localDateTime = LocalDateTime.now();
+
+        Teacher teacher = new Teacher(1L,"LastName", "FirstName", localDateTime, localDateTime);
+
+        Session s1 = Session.builder()
+                .id(1L)
+                .name("A")
+                .description("Description")
+                .date(date)
+                .users(Arrays.asList())
+                .teacher(teacher)
+                .createdAt(localDateTime)
+                .updatedAt(localDateTime)
+                .build();
+        Session s2 = Session.builder()
+                .id(1L)
+                .name("A")
+                .description("Description")
+                .date(date)
+                .users(Arrays.asList())
+                .teacher(teacher)
+                .createdAt(localDateTime)
+                .updatedAt(localDateTime)
+                .build();
+        Session s3 = Session.builder()
+                .id(2L)
+                .name("B")
+                .description("Description")
+                .date(date)
+                .users(Arrays.asList())
+                .teacher(teacher)
+                .createdAt(localDateTime)
+                .updatedAt(localDateTime)
+                .build();
 
         assertEquals(s1, s2);
         assertEquals(s1.hashCode(), s2.hashCode());
@@ -83,6 +115,72 @@ class SessionTest {
         assertEquals(date, session.getDate());
         assertEquals(now, session.getCreatedAt());
         assertEquals(now, session.getUpdatedAt());
+    }
+
+    @Test
+    void equalsAndHashCode_sameId_shouldBeEqual() {
+        Session s1 = new Session();
+        s1.setId(1L);
+
+        Session s2 = new Session();
+        s2.setId(1L);
+
+        assertEquals(s1, s2);
+        assertEquals(s1.hashCode(), s2.hashCode());
+    }
+
+    @Test
+    void equalsAndHashCode_differentId_shouldNotBeEqual() {
+        Session s1 = new Session();
+        s1.setId(1L);
+
+        Session s2 = new Session();
+        s2.setId(2L);
+
+        assertNotEquals(s1, s2);
+    }
+
+    @Test
+    void equals_sameObject_shouldBeTrue() {
+        Session session = new Session();
+        session.setId(1L);
+
+        assertEquals(session, session);
+    }
+
+    @Test
+    void equals_null_shouldBeFalse() {
+        Session session = new Session();
+        session.setId(1L);
+
+        assertNotEquals(session, null);
+    }
+
+    @Test
+    void equals_differentClass_shouldBeFalse() {
+        Session session = new Session();
+        session.setId(1L);
+
+        assertNotEquals(session, "not a session");
+    }
+
+    @Test
+    void equals_nullIds_shouldBeEqual() {
+        Session s1 = new Session();
+        Session s2 = new Session();
+
+        assertEquals(s1, s2);
+        assertEquals(s1.hashCode(), s2.hashCode());
+    }
+
+    @Test
+    void equals_oneNullId_shouldNotBeEqual() {
+        Session s1 = new Session();
+        s1.setId(1L);
+
+        Session s2 = new Session();
+
+        assertNotEquals(s1, s2);
     }
 
 }

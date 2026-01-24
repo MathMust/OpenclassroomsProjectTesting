@@ -84,4 +84,58 @@ class SignupRequestTest {
         // contenu différent
         assertNotEquals(r1, r3);
     }
+
+    private SignupRequest createRequest() {
+        SignupRequest r = new SignupRequest();
+        r.setEmail("test@test.com");
+        r.setFirstName("John");
+        r.setLastName("Doe");
+        r.setPassword("password123");
+        return r;
+    }
+
+    @Test
+    void testEqualsSameObject() {
+        SignupRequest r = createRequest();
+        assertEquals(r, r); // o == this
+    }
+
+    @Test
+    void testEqualsIdenticalObjects() {
+        SignupRequest r1 = createRequest();
+        SignupRequest r2 = createRequest();
+
+        assertEquals(r1, r2);
+        assertEquals(r1.hashCode(), r2.hashCode());
+    }
+
+    @Test
+    void testEqualsWithNull() {
+        SignupRequest r = createRequest();
+        assertNotEquals(r, null);
+    }
+
+    @Test
+    void testEqualsWithDifferentClass() {
+        SignupRequest r = createRequest();
+        assertNotEquals(r, "not a signup request");
+    }
+
+    @Test
+    void testEqualsDifferentField() {
+        SignupRequest r1 = createRequest();
+        SignupRequest r2 = createRequest();
+        r2.setEmail("other@test.com");
+
+        assertNotEquals(r1, r2);
+    }
+
+    @Test
+    void testEqualsWithNullField() {
+        SignupRequest r1 = createRequest();
+        SignupRequest r2 = createRequest();
+        r2.setFirstName(null);
+
+        assertNotEquals(r1, r2);
+    }
 }

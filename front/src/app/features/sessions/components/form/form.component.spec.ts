@@ -100,6 +100,33 @@ describe('FormComponent', () => {
     expect(component.sessionForm?.controls['description'].value).toBe('');
   });
 
+  it('should mark form invalid when values is invalid', () => {
+    component.sessionForm?.controls['name'].setValue('');
+    component.sessionForm?.controls['date'].setValue('2026-01-01');
+    component.sessionForm?.controls['teacher_id'].setValue(1);
+    component.sessionForm?.controls['description'].setValue('test');
+    expect(component.sessionForm?.invalid).toBe(true);
+
+    component.sessionForm?.controls['name'].setValue('Yoga');
+    component.sessionForm?.controls['date'].setValue('');
+    component.sessionForm?.controls['teacher_id'].setValue(1);
+    component.sessionForm?.controls['description'].setValue('test');
+    expect(component.sessionForm?.invalid).toBe(true);
+
+    component.sessionForm?.controls['name'].setValue('Yoga');
+    component.sessionForm?.controls['date'].setValue('2026-01-01');
+    component.sessionForm?.controls['teacher_id'].setValue(null);
+    component.sessionForm?.controls['description'].setValue('test');
+    expect(component.sessionForm?.invalid).toBe(true);
+
+    component.sessionForm?.controls['name'].setValue('Yoga');
+    component.sessionForm?.controls['date'].setValue('2026-01-01');
+    component.sessionForm?.controls['teacher_id'].setValue(1);
+    component.sessionForm?.controls['description'].setValue('');
+    expect(component.sessionForm?.invalid).toBe(true);
+
+  });
+
   it('should initialize form with session data on update', fakeAsync(() => {
     component.onUpdate = true;
     component['id'] = '1';
